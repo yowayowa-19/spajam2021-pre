@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pydantic import BaseModel
 from fastapi import APIRouter
 
+from controller import controller
 
 router = APIRouter()
 
@@ -54,7 +55,12 @@ rank_result: list[Ranking] = [{"name": "りあ", "score": 300, "rank": 1,
 
 @router.post("/mobile/register/")
 async def register(user: UserRegistration):
-    return {"succeed": True}
+    name = user.user_name
+    mac_address = user.mac_address
+
+    users = controller.Users()
+    result = users.register(mac_address, name)
+    return {"succeed": result}
 
 
 @router.post("/mobile/checksend/")
