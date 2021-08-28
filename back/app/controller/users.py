@@ -33,7 +33,8 @@ class Users:
             score integer,
             rank integer,
             hand text,
-            phrase text
+            phrase text,
+            is_sending bool
         )""")
         self.con.commit()
         cur.close()
@@ -78,6 +79,36 @@ class Users:
                 return True
         cur.close()
         return False
+
+    def start_phrase(self, mac_addr: str) -> bool:
+        cur = self.cursor()
+        row = cur.execute(
+            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
+        is_sending: bool = row.fetchone()[0]
+        if not is_sending:
+            cur.execute(
+                "UPDATE users SET is_sending = true WHERE mac_addr = ?", (mac_addr,))
+            self.con.commit()
+        cur.close()
+
+    def stop_phrase(self, mac_addr: str):
+        cur = self.cursor()
+        row = cur.execute(
+            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
+        is_sending: bool = row.fetchone()[0]
+        if is_sending:
+            cur.execute(
+                "UPDATE users SET is_sending = false WHERE mac_addr = ?", (mac_addr,))
+            self.con.commit()
+        cur.close()
+
+    def is_sending(self, mac_addr: str) -> bool:
+        cur = self.cursor()
+        row = cur.execute(
+            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
+        is_sending: bool = row.fetchone()[0]
+        cur.close()
+        return is_sending
 
     def set_rank(self):
         pass
