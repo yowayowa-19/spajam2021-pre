@@ -81,4 +81,5 @@ async def stop(mac_address: MacAddress):
 
 @router.post("/mobile/pairing")
 async def pairing(pairing_data: Pairing):
-    return {"succeed": True}
+    result = users.Users().pairing(pairing_data.mac_address, pairing_data.phrase)
+    return {"succeed": result}

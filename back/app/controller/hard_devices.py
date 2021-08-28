@@ -2,7 +2,10 @@ import sqlite3
 
 from pathlib import Path
 
-from libs import get_back_path
+try:
+    from controller.libs import get_back_path
+except ModuleNotFoundError:
+    from libs import get_back_path
 
 
 class HardDevices:
@@ -23,7 +26,7 @@ class HardDevices:
     def set_sample(self):
         "直接叩いてほしい"
         cur = self.cursor()
-        items = [("mac1", "ABCDE"), ("mac2", "ABCDE"), ("mac3", "ABC")]
+        items = [("mac1", "ABCDE"), ("mac2", "BCDEF"), ("mac3", "CDERG")]
         cur.executemany(
             "INSERT INTO hard_devices (mac_addr, phrase) VALUES(?, ?)", items)
         self.con.commit()
