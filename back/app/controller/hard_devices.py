@@ -9,6 +9,8 @@ except ModuleNotFoundError:
 
 # from libs.get_path import get_back_path
 
+from libs.phrase import generate, score
+
 
 class HardDevices:
     def __init__(self):
@@ -33,6 +35,9 @@ class HardDevices:
             "INSERT INTO hard_devices (mac_addr, phrase) VALUES(?, ?)", items)
         self.con.commit()
         cur.close()
+
+    def send_phrase(self, mac_addr: str):
+        phrase = generate()
 
 
 if __name__ == '__main__':
