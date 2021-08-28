@@ -1,5 +1,6 @@
 package spajam.yowayowa.prespajam2021
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,9 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
+            val intent = Intent(context, WalkThroughActivity::class.java)
+            //帰ってこれなくする
+            startActivity(intent)
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
