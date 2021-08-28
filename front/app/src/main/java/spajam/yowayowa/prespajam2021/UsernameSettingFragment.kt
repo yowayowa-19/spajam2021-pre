@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.fingerprintjs.android.fingerprint.Configuration
 import com.fingerprintjs.android.fingerprint.FingerprinterFactory
 import kotlinx.coroutines.GlobalScope
@@ -60,10 +62,10 @@ class UsernameSettingFragment : Fragment() {
                 val deviceId = result.deviceId
                 postToServer(deviceId,editText.text.toString())
             }
-            val intent = Intent(activity, MainActivity::class.java)
-            //戻ってこれなくする
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            val manager: FragmentManager? = activity?.supportFragmentManager
+            val transaction: FragmentTransaction? = manager?.beginTransaction()
+            transaction?.add(R.id.frameLayout, PairingSettingFragment())
+            transaction?.commit()
         }
     }
     private fun postToServer(deviceId : String, userName: String){

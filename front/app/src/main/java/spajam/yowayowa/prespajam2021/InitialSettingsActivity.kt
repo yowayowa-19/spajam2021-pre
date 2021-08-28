@@ -37,7 +37,7 @@ class InitialSettingsActivity   : AppCompatActivity() {
         if (savedInstanceState == null) {
             val manager: FragmentManager = supportFragmentManager
             val transaction: FragmentTransaction = manager.beginTransaction()
-            transaction.add(R.id.frameLayout, PairingSettingFragment())
+            transaction.add(R.id.frameLayout, UsernameSettingFragment())
             transaction.commit()
         }
     }
