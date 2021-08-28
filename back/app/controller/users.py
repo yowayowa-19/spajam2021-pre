@@ -12,7 +12,13 @@ except ModuleNotFoundError:
 # 作るテーブル
 # USERS
 #
-#
+# mac_addr text PRIMARY KEY,
+# hard_mac_addr text,
+# name text,
+# score integer,
+# rank integer,
+# hand text
+# phrase text
 
 
 class Users:
@@ -26,7 +32,8 @@ class Users:
             name text,
             score integer,
             rank integer,
-            hand text
+            hand text,
+            phrase text
         )""")
         self.con.commit()
         cur.close()
@@ -71,3 +78,6 @@ class Users:
                 return True
         cur.close()
         return False
+
+    def set_rank(self):
+        pass
