@@ -31,11 +31,11 @@ def score(phrase: str) -> int:
     result = sum(map(ord, phrase)) - ord('A') * 5
     counts = [item[1] for item in Counter(phrase).most_common()]
     if len(counts) == 2:
-        if max(counts) == 4:
+        if counts[0] == 4:
             result += FOURCARD
         else:
             result += FULLHOUSE
-    if len(counts) == 3:
+    if counts[0] == 3:
         if max(counts) == 3:
             result += THREECARD
         else:
