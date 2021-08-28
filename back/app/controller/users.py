@@ -8,7 +8,7 @@ import sqlite3
 
 class Users:
     def __init__(self):
-        self.con = sqlite3.connect("users.db")
+        self.con = sqlite3.connect("db/users.db")
         cur = self.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS users (
             mac_addr text PRIMARY KEY,
