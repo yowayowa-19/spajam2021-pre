@@ -11,6 +11,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
+import okhttp3.*
+import java.io.IOException
+import android.util.Log
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -58,7 +61,26 @@ class FirstFragment : Fragment(){
                  * method you would use to setup whatever you want done once the
                  * device has been shook.
                  */
-                Toast.makeText(activity, count.toString(), Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, count.toString(), Toast.LENGTH_SHORT).show()
+                getToServer()
+            }
+        })
+    }
+
+    internal fun getToServer() {
+        val url: String = "http://192.168.30.134:8000"
+        val client: OkHttpClient = OkHttpClient()
+        val request = Request.Builder().url(url).get().build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("tag","Fail.")
+                Log.d("tag",e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseText: String? = response.body?.string()
+                if(responseText === null) return
+                Log.d("tag",responseText)
             }
         })
     }
