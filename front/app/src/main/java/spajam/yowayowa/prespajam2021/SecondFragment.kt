@@ -2,12 +2,15 @@ package spajam.yowayowa.prespajam2021
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import okhttp3.*
+import java.io.IOException
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
