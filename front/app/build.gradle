@@ -15,7 +15,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -45,4 +49,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation "com.github.fingerprintjs:fingerprint-android:1.2"
 }

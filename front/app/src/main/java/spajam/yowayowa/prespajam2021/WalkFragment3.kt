@@ -27,7 +27,7 @@ class WalkFragment3: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener(){
-            val intent = Intent(activity, MainActivity::class.java)
+            val intent = Intent(activity, InitialSettingsActivity::class.java)
             //戻ってこれなくする
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
