@@ -28,7 +28,7 @@ class PairingSettingFragment : Fragment() {
     // アルファベットフィルタ
     private val alphabetFilter =
         InputFilter { source, start, end, dest, dstart, dend ->
-            if (source.toString().matches(Regex("^[a-zA-Z]+$"))) {
+            if (source.toString().matches(Regex("^[a-zA-Z]{0,8}+$"))) {
                 source.toString().toUpperCase(Locale.ROOT)
             } else {
                 ""

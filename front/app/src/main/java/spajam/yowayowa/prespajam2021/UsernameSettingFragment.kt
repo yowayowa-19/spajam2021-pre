@@ -4,13 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import org.w3c.dom.Text
+import com.fingerprintjs.android.fingerprint.Configuration
+import com.fingerprintjs.android.fingerprint.FingerprinterFactory
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 
 
 class UsernameSettingFragment : Fragment() {
@@ -23,13 +31,8 @@ class UsernameSettingFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener(){
-            val intent = Intent(activity, MainActivity::class.java)
-            //戻ってこれなくする
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-        }
         val editText = view.findViewById<EditText>(R.id.editTextTextPersonName)
         editText.addTextChangedListener(object : TextWatcher {
             // 文字列sのなかで startの位置から開始されている字数countの文字が、
@@ -49,5 +52,43 @@ class UsernameSettingFragment : Fragment() {
                 button.isEnabled = !(s.length === 0)
             }
         })
+        button.setOnClickListener(){
+            val fingerprinter = FingerprinterFactory
+                .getInstance(requireContext(), Configuration(version = 3))
+
+            fingerprinter.getDeviceId { result ->
+                val deviceId = result.deviceId
+                postToServer(deviceId,editText.text.toString())
+            }
+            val intent = Intent(activity, MainActivity::class.java)
+            //戻ってこれなくする
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+    }
+    private fun postToServer(deviceId : String, userName: String){
+        GlobalScope.launch {
+            try {
+                val url: String = "http://192.168.30.134:8000/mobile/register/"
+                val client: OkHttpClient = OkHttpClient.Builder().build()
+
+                // create json
+                val json = JSONObject()
+                json.put("mac_address", deviceId)
+                json.put("user_name", userName)
+
+                // post
+                val postBody =
+                    json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                val request: Request = Request.Builder().url(url).post(postBody).build()
+                val response = client.newCall(request).execute()
+
+                val result: String = response.body!!.string()
+                Log.d("tag",result)
+                response.close()
+            }catch (e : Exception){
+                Log.d("err",e.toString())
+            }
+        }
     }
 }
