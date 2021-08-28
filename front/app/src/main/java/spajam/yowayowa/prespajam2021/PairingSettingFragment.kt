@@ -1,5 +1,6 @@
 package spajam.yowayowa.prespajam2021
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -65,10 +66,10 @@ class PairingSettingFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    val manager: FragmentManager? = activity?.supportFragmentManager
-                    val transaction: FragmentTransaction? = manager?.beginTransaction()
-                    transaction?.add(R.id.frameLayout, UsernameSettingFragment())
-                    transaction?.commit()
+                    val intent = Intent(activity, MainActivity::class.java)
+                    //戻ってこれなくする
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
                 }else{
                     activity?.runOnUiThread {
                         Toast.makeText(
