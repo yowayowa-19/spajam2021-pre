@@ -40,9 +40,6 @@ class FirstFragment : Fragment(){
             mAccelerometer,
             SensorManager.SENSOR_DELAY_UI
         )
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
     }
 
     override fun onStop() {

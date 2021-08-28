@@ -6,6 +6,9 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,6 +16,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
+        val bnv = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bnv.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.main -> {
+                    val manager: FragmentManager = this.supportFragmentManager
+                    val transaction: FragmentTransaction? = manager?.beginTransaction()
+                    transaction?.add(R.id.nav_host_fragment, FirstFragment())
+                    transaction?.commit()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.ranking -> {
+                    val manager: FragmentManager = this.supportFragmentManager
+                    val transaction: FragmentTransaction? = manager?.beginTransaction()
+                    transaction?.add(R.id.nav_host_fragment, SecondFragment())
+                    transaction?.commit()
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
