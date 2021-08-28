@@ -49,7 +49,7 @@ class Users:
         count = len(row.fetchall())
         if count == 0:
             cur.execute(
-                """INSERT INTO users (mac_addr, name) VALUES(?, ?)""", (mac_addr, name))
+                """INSERT INTO users (mac_addr, name, score, is_sending) VALUES(?, ?, 0, false)""", (mac_addr, name))
             self.con.commit()
             cur.close()
             return True
@@ -95,7 +95,7 @@ class Users:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()[0]
+        is_sending: bool = row.fetchone()
         if is_sending:
             cur.execute(
                 "UPDATE users SET is_sending = false WHERE mac_addr = ?", (mac_addr,))
@@ -106,9 +106,9 @@ class Users:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()[0]
+        is_sending: bool = row.fetchone()
         cur.close()
-        return is_sending
+        return is_sending if is_sending else False
 
     def set_rank(self):
         pass

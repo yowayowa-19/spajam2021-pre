@@ -76,7 +76,7 @@ async def me(mac_address: MacAddress) -> Ranking:
 
 @router.post("/mobile/stop")
 async def stop(mac_address: MacAddress):
-    users.Users().stop_phrase()
+    users.Users().stop_phrase(mac_address.mac_address)
     return {"succeed": True}
 
 

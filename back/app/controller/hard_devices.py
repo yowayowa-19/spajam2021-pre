@@ -9,7 +9,7 @@ except ModuleNotFoundError:
 
 # from libs.get_path import get_back_path
 
-from libs.phrase import generate, score
+# from libs.phrase import generate, score
 
 
 class HardDevices:
@@ -36,8 +36,8 @@ class HardDevices:
         self.con.commit()
         cur.close()
 
-    def send_phrase(self, mac_addr: str):
-        phrase = generate()
+    # def send_phrase(self, mac_addr: str):
+    #     phrase = generate()
 
 
 if __name__ == '__main__':

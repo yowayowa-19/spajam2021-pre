@@ -1,3 +1,4 @@
+from controller.hard_devices import HardDevices
 from fastapi import FastAPI
 import uvicorn
 
@@ -15,4 +16,5 @@ async def ping():
 
 
 if __name__ == '__main__':
+    HardDevices()
     uvicorn.run(app, host="0.0.0.0", port=8000)

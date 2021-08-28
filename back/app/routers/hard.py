@@ -1,4 +1,4 @@
-from app.controller.users import Users
+from controller.users import Users
 from fastapi import APIRouter
 from libs.phrase import generate
 from pydantic import BaseModel
@@ -12,7 +12,7 @@ class MacAddress(BaseModel):
 
 @router.post("/hard/sendphrase")
 async def send_string(mac_address: MacAddress):
-    stopFlag = Users().is_sending(mac_address)
+    stopFlag = Users().is_sending(mac_address.mac_address)
     phrase = generate()
     # 1か0を付与する
     return {"phrase": str(int(stopFlag))+phrase}
