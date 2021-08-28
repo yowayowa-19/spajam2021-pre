@@ -1,12 +1,13 @@
 import sqlite3
 
-from pathlib import Path
+# from pathlib import Path
 
 try:
     from controller.libs import get_back_path
 except ModuleNotFoundError:
     from libs import get_back_path
 
+# from libs.get_path import get_back_path
 
 # 作るテーブル
 # USERS
