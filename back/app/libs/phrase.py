@@ -28,7 +28,7 @@ def score(phrase: str) -> int:
     if phrase == 'NYARN':
         return NYARN
     # base score
-    result = sum(map(ord, phrase)) - ord('A') * 5
+    result = sum(map(ord, phrase)) - (ord('A')-1) * 5
     counts = [item[1] for item in Counter(phrase).most_common()]
     if len(counts) == 2:
         if counts[0] == 4:
