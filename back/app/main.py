@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 import uvicorn
 
+from routers import hard, mobile
+
 app = FastAPI()
+
+app.include_router(mobile.router)
+app.include_router(hard.router)
+
 
 @app.get('/')
 async def ping():
