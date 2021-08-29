@@ -3,9 +3,9 @@
     <item
         android:id="@+id/main"
         android:orderInCategory="100"
-        android:title="main" />
+        android:title="猫の様子" />
     <item
         android:id="@+id/ranking"
         android:orderInCategory="200"
-        android:title="ranking"/>
+        android:title="ランキング"/>
 </menu>

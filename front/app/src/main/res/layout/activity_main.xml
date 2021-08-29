@@ -26,9 +26,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/backgroundMain"
+        android:background="@color/backgroundMainDark"
         android:id="@+id/bottom_nav"
         app:menu="@menu/menu_bottom"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        app:itemTextColor="@color/fontColor"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

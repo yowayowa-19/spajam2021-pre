@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="backgroundMain">#FFF9F4</color>
+    <color name="colorPrimary">#717171</color>
+    <color name="colorPrimaryDark">#4E4E4E</color>
+    <color name="colorAccent">#F44336</color>
+    <color name="backgroundMain">#EC5F2E</color>
+    <color name="backgroundMainDark">#DA5122</color>
     <color name="indicatorPrimary">#000</color>
-    <color name="indicatorSub">#CCCCCC</color>
+    <color name="indicatorSub">#FFF</color>
+    <color name="fontColor">#FFF</color>
 </resources>
