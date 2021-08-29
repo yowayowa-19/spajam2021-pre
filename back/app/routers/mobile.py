@@ -77,10 +77,13 @@ async def me(mac_address: MacAddress) -> Ranking:
     return users.me(mac_address)
     # return {"name": "りあ", "score": 300, "rank": 1, "hand": "フルハウス", "isMe": True}
 
-
 @router.post("/mobile/stop")
 async def stop(mac_address: MacAddress):
-    users.Users().stop_phrase(mac_address.mac_address)
+    # global IS_SENDING
+    mac_addr = mac_address.mac_address
+    print("/mobile/stop")
+    users.Users().stop_phrase(mac_addr)
+    # users.Users().is_sending(mac_addr)
     return {"succeed": True}
 
 

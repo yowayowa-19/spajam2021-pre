@@ -36,7 +36,7 @@ class Users:
             rank integer,
             hand text,
             phrase text,
-            is_sending bool
+            is_sending integer
         )""")
         self.con.commit()
         cur.close()
@@ -68,55 +68,75 @@ class Users:
         result = row.fetchall()
         if len(result) == 1:
             hard_mac_addr: str = result[0][0]
-            print(hard_mac_addr)
+            # print(hard_mac_addr)
             cur.execute(
                 "UPDATE users SET hard_mac_addr = ?  WHERE mac_addr = ?", (hard_mac_addr, mac_addr))
             self.con.commit()
             row = cur.execute(
                 "SELECT * FROM users WHERE hard_mac_addr = ?", (hard_mac_addr,))
             count = len(row.fetchall())
-            print(count)
+            # print(count)
             if count == 1:
                 # ハードウェアMACアドレスが一致したらTrue
                 return True
         cur.close()
         return False
 
-    def start_phrase(self, mac_addr: str) -> bool:
+    def start_phrase(self, mac_addr: str):
         cur = self.cursor()
+        cur.execute(
+            "UPDATE users SET is_sending = 1 WHERE hard_mac_addr = ?", (mac_addr,))
+        self.con.commit()
+        print(f'{mac_addr=}')
         row = cur.execute(
-            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()
-        if not is_sending:
-            cur.execute(
-                "UPDATE users SET is_sending = true WHERE mac_addr = ?", (mac_addr,))
-            self.con.commit()
+            "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (mac_addr,))
+        is_sending: int = row.fetchone()[0]
+        self.con.commit()
+        # if is_sending is None:
+        #     is_sending = 1
+        print(f'l090: {is_sending=}')
         cur.close()
 
     def stop_phrase(self, mac_addr: str):
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()
-        if is_sending:
-            cur.execute(
-                "UPDATE users SET is_sending = false WHERE mac_addr = ?", (mac_addr,))
-            self.con.commit()
+        is_sending: bool = row.fetchone()[0]
+        print(f'l102: {is_sending=}')
+        # if is_sending:
+        cur.execute(
+            "UPDATE users SET is_sending = 0 WHERE mac_addr = ?", (mac_addr,))
+        self.con.commit()
+        row = cur.execute(
+            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
+        is_sending: bool = row.fetchone()[0]
+        print(f'l112: {is_sending=}')
         cur.close()
 
-    def is_sending(self, mac_addr: str) -> bool:
+    def is_sending(self, mac_addr: str) -> int:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = x[0] if isinstance(
-            x := row.fetchone(), (tuple, list)) else x if x else False
+        # is_sending: bool = x[0] if isinstance(
+        #     x := row.fetchone(), (tuple, list)) else x if x else False
+        flag = row.fetchone()
         cur.close()
-        return is_sending
+        return flag if flag else 0
+
+    def is_sending_h(self, hard_mac_addr: str) -> int:
+        cur = self.cursor()
+        row = cur.execute(
+            "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (hard_mac_addr,))
+        # is_sending: bool = x[0] if isinstance(
+        #     x := row.fetchone(), (tuple, list)) else x if x else False
+        flag = row.fetchone()[0]
+        cur.close()
+        return flag if flag else 0
 
     def set_phrase_and_score(self, mac_addr: str, phrase: str):
-        print(mac_addr)
+        # print(mac_addr)
         _score, _hand = score(phrase)
-        print(_score)
+        # print(_score)
         cur = self.cursor()
         cur.execute("UPDATE users SET phrase = ?, score = ?, hand = ? WHERE hard_mac_addr = ?",
                     (phrase, _score, _hand, mac_addr,))
