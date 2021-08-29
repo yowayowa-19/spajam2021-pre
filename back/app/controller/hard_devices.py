@@ -1,15 +1,9 @@
 import sqlite3
 
-# from pathlib import Path
-
 try:
     from controller.libs import get_back_path
 except ModuleNotFoundError:
     from libs import get_back_path
-
-# from libs.get_path import get_back_path
-
-# from libs.phrase import generate, score
 
 
 class HardDevices:
@@ -35,9 +29,6 @@ class HardDevices:
             "INSERT INTO hard_devices (mac_addr, phrase) VALUES(?, ?)", items)
         self.con.commit()
         cur.close()
-
-    # def send_phrase(self, mac_addr: str):
-    #     phrase = generate()
 
 
 if __name__ == '__main__':
