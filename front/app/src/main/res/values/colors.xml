@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#717171</color>
+    <color name="colorPrimary">#717171</color>//上
     <color name="colorPrimaryDark">#4E4E4E</color>
-    <color name="colorAccent">#F44336</color>
-    <color name="backgroundMain">#EC5F2E</color>
+    <color name="colorAccent">#F44336</color>//中
+    <color name="backgroundMain">#EC5F2E</color>//下
     <color name="backgroundMainDark">#DA5122</color>
     <color name="indicatorPrimary">#000</color>
     <color name="indicatorSub">#FFF</color>
