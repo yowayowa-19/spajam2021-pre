@@ -28,11 +28,11 @@ class Users:
             mac_addr text PRIMARY KEY,
             hard_mac_addr text,
             name text,
-            score integer,
+            score integer default 0,
             rank integer,
             hand text,
             phrase text,
-            is_sending integer
+            is_sending integer default 0
         )""")
         self.con.commit()
         cur.close()
@@ -47,7 +47,7 @@ class Users:
         count = len(row.fetchall())
         if count == 0:
             cur.execute(
-                """INSERT INTO users (mac_addr, name, score, is_sending) VALUES(?, ?, 0, false)""", (mac_addr, name))
+                """INSERT INTO users (mac_addr, name) VALUES(?, ?)""", (mac_addr, name))
             self.con.commit()
             cur.close()
             return True
