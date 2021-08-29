@@ -16,6 +16,8 @@ import okhttp3.*
 import java.io.IOException
 import android.util.Log
 import android.widget.ImageView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.fingerprintjs.android.fingerprint.Configuration
 import com.fingerprintjs.android.fingerprint.FingerprinterFactory
 import kotlinx.coroutines.runBlocking
@@ -43,9 +45,6 @@ class ThirdFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<ImageView>(R.id.imageView3).setOnClickListener{
-
-        }
         mSensorManager!!.registerListener(
             mShakeDetector,
             mAccelerometer,
@@ -84,10 +83,10 @@ class ThirdFragment : Fragment(){
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        val intent = Intent(activity, MainActivity::class.java)
-                        //戻ってこれなくする
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
+                        val manager: FragmentManager? = activity?.supportFragmentManager
+                        val transaction: FragmentTransaction? = manager?.beginTransaction()
+                        transaction?.add(R.id.nav_host_fragment, ForthFragment())
+                        transaction?.commit()
                     }else{
                         activity?.runOnUiThread {
                             Toast.makeText(
