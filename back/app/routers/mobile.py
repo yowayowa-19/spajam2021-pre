@@ -1,4 +1,3 @@
-# from typing import Optional
 from dataclasses import dataclass
 
 from pydantic import BaseModel
@@ -33,27 +32,6 @@ class Ranking:
     isMe: bool
 
 
-rank_result: list[Ranking] = [{"name": "りあ", "score": 300, "rank": 1,
-                               "hand": "フルハウス", "isMe": True},
-                              {"name": "Chika", "score": 299, "rank": 2,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Riko", "score": 287, "rank": 3,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Kanan", "score": 296, "rank": 4,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Daiya", "score": 295, "rank": 5,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "You", "score": 294, "rank": 6,
-                                  "hand": "ワンペア", "isMe": False},
-                              {"name": "Yoshiko", "score": 293, "rank": 7,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Hanamaru", "score": 292, "rank": 8,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Mari", "score": 291, "rank": 9,
-                               "hand": "ワンペア", "isMe": False},
-                              {"name": "Ruby", "score": 290, "rank": 10, "hand": "ワンペア", "isMe": False}]
-
-
 @router.post("/mobile/register/")
 async def register(user: UserRegistration):
     result = Users().register(user.mac_address, user.user_name)
@@ -75,15 +53,12 @@ async def ranking(mac_address: MacAddress) -> list[Ranking]:
 @router.post("/mobile/me")
 async def me(mac_address: MacAddress) -> Ranking:
     return users.me(mac_address)
-    # return {"name": "りあ", "score": 300, "rank": 1, "hand": "フルハウス", "isMe": True}
-
+   
 @router.post("/mobile/stop")
 async def stop(mac_address: MacAddress):
-    # global IS_SENDING
     mac_addr = mac_address.mac_address
     print("/mobile/stop")
     users.Users().stop_phrase(mac_addr)
-    # users.Users().is_sending(mac_addr)
     return {"succeed": True}
 
 
