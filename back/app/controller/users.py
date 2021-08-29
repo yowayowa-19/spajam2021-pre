@@ -123,5 +123,22 @@ class Users:
         self.con.commit()
         cur.close()
 
-    def set_rank(self):
-        pass
+    def get_ranking(self, mac_addr: str):
+        cur = self.cursor()
+        row = cur.execute("""SELECT view 
+        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC) as rank_result FROM users) as view
+        WHERE rank_result <= 10""")
+        result = [item + (mac_addr == item[0],) for item in row.fetchall()]
+        print(result)
+        cur.close()
+        return result
+
+    def get_me(self, mac_addr: str):
+        cur = self.cursor()
+        row = cur.execute("""SELECT view 
+        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC ) as rank_result, true FROM users) as view
+        WHERE mac_addr = ?""", (mac_addr,))
+        result = row.fetchone()
+        cur.close()
+        print(result)
+        return result

@@ -68,12 +68,14 @@ async def check_send(mac_address: MacAddress):
 
 @router.post("/mobile/ranking")
 async def ranking(mac_address: MacAddress) -> list[Ranking]:
-    return rank_result
+    []
+    return users.ranking(mac_address)
 
 
 @router.post("/mobile/me")
 async def me(mac_address: MacAddress) -> Ranking:
-    return {"name": "りあ", "score": 300, "rank": 1, "hand": "フルハウス", "isMe": True}
+    return users.me(mac_address)
+    # return {"name": "りあ", "score": 300, "rank": 1, "hand": "フルハウス", "isMe": True}
 
 
 @router.post("/mobile/stop")
