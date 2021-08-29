@@ -14,71 +14,37 @@ import androidx.navigation.fragment.findNavController
 import okhttp3.*
 import java.io.IOException
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import org.w3c.dom.Text
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class FirstFragment : Fragment(){
 
-    private var mSensorManager: SensorManager? = null
-    private var mAccelerometer: Sensor? = null
-    private var mShakeDetector: ShakeDetector? = null
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        initSensor()
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mSensorManager!!.registerListener(
-            mShakeDetector,
-            mAccelerometer,
-            SensorManager.SENSOR_DELAY_UI
-        )
+        view.findViewById<TextView>(R.id.textview_first).setOnClickListener{
+            val manager: FragmentManager? = activity?.supportFragmentManager
+            val transaction: FragmentTransaction? = manager?.beginTransaction()
+            transaction?.add(R.id.nav_host_fragment, ThirdFragment())
+            transaction?.commit()
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        mSensorManager?.unregisterListener(this.mShakeDetector);
     }
 
-    private fun initSensor() {
-        // ShakeDetector initialization
-        mSensorManager = activity?.getSystemService(SENSOR_SERVICE) as SensorManager
-        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        mShakeDetector = ShakeDetector()
-        mShakeDetector!!.setOnShakeListener(object : ShakeDetector.OnShakeListener {
-            override fun onShake(count: Int) { /*
-                 * The following method, "handleShakeEvent(count):" is a stub //
-                 * method you would use to setup whatever you want done once the
-                 * device has been shook.
-                 */
-                //Toast.makeText(activity, count.toString(), Toast.LENGTH_SHORT).show()
-                getToServer()
-            }
-        })
-    }
-
-    internal fun getToServer() {
-        val url: String = "http://192.168.30.134:8000"
-        val client: OkHttpClient = OkHttpClient()
-        val request = Request.Builder().url(url).get().build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("tag","Fail.")
-                Log.d("tag",e.toString())
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseText: String? = response.body?.string()
-                if(responseText === null) return
-                Log.d("tag",responseText)
-            }
-        })
-    }
 }
