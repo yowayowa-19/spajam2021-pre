@@ -90,7 +90,8 @@ class Users:
         print(f'{mac_addr=}')
         row = cur.execute(
             "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (mac_addr,))
-        is_sending: int = row.fetchone()[0]
+        is_sending: int = row.fetchone()
+        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
         self.con.commit()
         # if is_sending is None:
         #     is_sending = 1
@@ -119,9 +120,10 @@ class Users:
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
         # is_sending: bool = x[0] if isinstance(
         #     x := row.fetchone(), (tuple, list)) else x if x else False
-        flag = row.fetchone()
+        is_sending = row.fetchone()
+        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
         cur.close()
-        return flag if flag else 0
+        return is_sending if is_sending else 0
 
     def is_sending_h(self, hard_mac_addr: str) -> int:
         cur = self.cursor()
@@ -129,7 +131,7 @@ class Users:
             "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (hard_mac_addr,))
         # is_sending: bool = x[0] if isinstance(
         #     x := row.fetchone(), (tuple, list)) else x if x else False
-        flag = row.fetchone()[0]
+        flag = row.fetchone()
         cur.close()
         return flag if flag else 0
 
