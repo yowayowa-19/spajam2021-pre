@@ -12,6 +12,7 @@ class MacAddress(BaseModel):
 
 @router.post("/hard/sendphrase")
 async def send_string(mac_address: MacAddress):
+    "文字列を送信する"
     hard_mac_addr = mac_address.mac_address.replace(":", "")
     previous_stop_flag = Users().is_sending_h(hard_mac_addr)
 
