@@ -12,11 +12,10 @@ class MacAddress(BaseModel):
 
 @router.post("/hard/sendphrase")
 async def send_string(mac_address: MacAddress):
-    mac_addr = mac_address.mac_address
-    stopFlag = Users().is_sending(mac_addr)
-    print(stopFlag)
+    users = Users()
+    stopFlag = users.is_sending(mac_address.mac_address)
     phrase = generate()
-    Users().set_phrase_and_score(mac_addr, phrase)
+    users.set_phrase_and_score(phrase)
 
     # 1か0を付与する
     return {"phrase": str(int(stopFlag))+phrase}
