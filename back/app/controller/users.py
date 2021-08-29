@@ -81,7 +81,8 @@ class Users:
         row = cur.execute(
             "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (mac_addr,))
         is_sending: int = row.fetchone()
-        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
+        is_sending = is_sending[0] if isinstance(
+            is_sending, tuple) else is_sending
         self.con.commit()
         cur.close()
 
@@ -97,7 +98,8 @@ class Users:
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
         is_sending = row.fetchone()
-        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
+        is_sending = is_sending[0] if isinstance(
+            is_sending, tuple) else is_sending
         cur.close()
         return is_sending if is_sending else 0
 
@@ -119,9 +121,15 @@ class Users:
 
     def get_ranking(self, mac_addr: str):
         cur = self.cursor()
-        row = cur.execute("""SELECT view 
-        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC) as rank_result FROM users) as view
-        WHERE rank_result <= 10""")
+        row = cur.execute("""
+        SELECT mac_addr, name, score, hand, 
+            (SELECT COUNT(*) + 1 
+            FROM users users2 
+            WHERE users2.score > users1.score) rnk
+        FROM users users1 
+        WHERE rnk <= 10 
+        ORDER BY score
+        """)
         result = [item + (mac_addr == item[0],) for item in row.fetchall()]
         print(result)
         cur.close()
@@ -129,8 +137,12 @@ class Users:
 
     def get_me(self, mac_addr: str):
         cur = self.cursor()
-        row = cur.execute("""SELECT view 
-        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC ) as rank_result, true FROM users) as view
+        row = cur.execute("""
+        SELECT mac_addr, name, score, hand, 
+            (SELECT COUNT(*) + 1 
+            FROM users users2 
+            WHERE users2.score > users1.score) rnk
+        FROM users users1 
         WHERE mac_addr = ?""", (mac_addr,))
         result = row.fetchone()
         cur.close()
