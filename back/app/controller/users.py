@@ -108,7 +108,7 @@ class Users:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()
+        is_sending: bool = row.fetchone()[0]
         cur.close()
         return is_sending if is_sending else False
 
