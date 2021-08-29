@@ -28,22 +28,22 @@ import org.json.JSONObject
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ForthFragment : Fragment(){
+class ResultFragment : Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forth, container, false)
+        return inflater.inflate(R.layout.fragment_result, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.button).setOnClickListener{
-            val manager: FragmentManager? = activity?.supportFragmentManager
-            val transaction: FragmentTransaction? = manager?.beginTransaction()
-            transaction?.add(R.id.nav_host_fragment, ResultFragment())
-            transaction?.commit()
+            val intent = Intent(activity, MainActivity::class.java)
+            //戻ってこれなくする
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
     }
 }
