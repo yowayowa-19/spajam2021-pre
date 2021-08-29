@@ -29,6 +29,7 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*
         val listView = view.findViewById<ListView>(R.id.listView)
         val arrayList = ArrayList<String>()
         arrayList.add("ria")
@@ -37,11 +38,11 @@ class SecondFragment : Fragment() {
         arrayList.add("riaaaa")
         val mAdapter: ArrayAdapter<*> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, arrayList)
         listView.adapter = mAdapter
-
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             val intent = Intent(context, WalkThroughActivity::class.java)
             //帰ってこれなくする
             startActivity(intent)
         }
+        */
     }
 }

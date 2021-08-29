@@ -7,27 +7,16 @@
     tools:context=".SecondFragment"
     android:background="@color/backgroundMain">
 
-    <ListView
-        android:id="@+id/listView"
-        android:textColor="@color/fontColor"
-        android:layout_width="409dp"
-        android:layout_height="460dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_second"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="もう一度ウォークスルーを表示"
-        android:background="@drawable/shape_rouded_corners"
-        android:textColor="@color/backgroundMain"
+        android:src="@drawable/concat_da"
+        android:layout_marginTop="-50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
