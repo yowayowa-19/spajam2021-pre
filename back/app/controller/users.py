@@ -114,11 +114,11 @@ class Users:
 
     def set_phrase_and_score(self, mac_addr: str, phrase: str):
         print(mac_addr)
-        _score = score(phrase)
+        _score, _hand = score(phrase)
         print(_score)
         cur = self.cursor()
-        cur.execute("UPDATE users SET phrase = ?, score = ? WHERE hard_mac_addr = ?",
-                    (phrase, _score, mac_addr,))
+        cur.execute("UPDATE users SET phrase = ?, score = ?, hand = ? WHERE hard_mac_addr = ?",
+                    (phrase, _score, _hand, mac_addr,))
         self.con.commit()
         cur.close()
 

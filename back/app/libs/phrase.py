@@ -15,34 +15,34 @@ def generate() -> str:
 
 
 # score
-NYARN = 1000
-FOURCARD = 700
-FULLHOUSE = 600
-THREECARD = 500
-STRAIGHT = 400
-TWOPAIR = 300
-ONEPAIR = 200
+NYARN = (1000, "にゃーん")
+FOURCARD = (700, "フォーカード")
+FULLHOUSE = (600, "フルハウス")
+THREECARD = (500, "スリーカード")
+STRAIGHT = (400, "ストレート")
+TWOPAIR = (300, "ツーペア")
+ONEPAIR = (200, "ワンペア")
 
 
-def score(phrase: str) -> int:
+def score(phrase: str) -> tuple[int, str]:
     if phrase == 'NYARN':
         return NYARN
     # base score
-    result = sum(map(ord, phrase)) - (ord('A')-1) * 5
+    result = (sum(map(ord, phrase)) - (ord('A')-1) * 5, "ノーペア")
     counts = [item[1] for item in Counter(phrase).most_common()]
     if len(counts) == 2:
         if counts[0] == 4:
-            result += FOURCARD
+            result = result[0] + FOURCARD[0], FOURCARD[1]
         else:
-            result += FULLHOUSE
+            result = result[0] + FULLHOUSE[0], FULLHOUSE[1]
     if counts[0] == 3:
         if max(counts) == 3:
-            result += THREECARD
+            result = result[0] + THREECARD[0], THREECARD[1]
         else:
-            result += TWOPAIR
+            result = result[0] + TWOPAIR[0], TWOPAIR[1]
     if len(counts) == 4:
-        result += ONEPAIR
+        result = result[0] + ONEPAIR[0], ONEPAIR[1]
     if len(counts) == 5:
         if [ord(p)-ord(phrase[0]) for p in phrase] == [0, 1, 2, 3, 4]:
-            result += STRAIGHT
+            result = result[0] + STRAIGHT[0], STRAIGHT[1]
     return result
