@@ -8,7 +8,9 @@ class WalkPagerAdapter(fm: FragmentActivity): FragmentStateAdapter(fm)  {
     private val res : List<Fragment> = listOf<Fragment>(
         WalkFragment1(),
         WalkFragment2(),
-        WalkFragment3()
+        WalkFragment3(),
+        WalkFragment4(),
+        WalkFragment5()
     )
 
     override fun createFragment(position: Int): Fragment {
