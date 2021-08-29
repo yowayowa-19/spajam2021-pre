@@ -14,12 +14,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 
-class WalkFragment3: Fragment() {
+class WalkFragment4: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_walk3, container, false)
+        return inflater.inflate(R.layout.fragment_walk4, container, false)
     }
 }

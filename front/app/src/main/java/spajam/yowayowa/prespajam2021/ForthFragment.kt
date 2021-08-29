@@ -1,6 +1,7 @@
 package spajam.yowayowa.prespajam2021
 
 import android.content.Context.SENSOR_SERVICE
+import android.content.Intent
 import android.hardware.*
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,36 +16,34 @@ import okhttp3.*
 import java.io.IOException
 import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import org.w3c.dom.Text
+import com.fingerprintjs.android.fingerprint.Configuration
+import com.fingerprintjs.android.fingerprint.FingerprinterFactory
+import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment(){
-
+class ForthFragment : Fragment(){
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        return inflater.inflate(R.layout.fragment_forth, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.textview_first).setOnClickListener{
+        view.findViewById<Button>(R.id.button).setOnClickListener{
             val manager: FragmentManager? = activity?.supportFragmentManager
             val transaction: FragmentTransaction? = manager?.beginTransaction()
-            transaction?.add(R.id.nav_host_fragment, ThirdFragment())
+            transaction?.add(R.id.nav_host_fragment, ResultFragment())
             transaction?.commit()
         }
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
 }

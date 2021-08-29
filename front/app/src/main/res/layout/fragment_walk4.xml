@@ -18,7 +18,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Step 3"
+            android:text="Step 4"
             android:textSize="@dimen/h3_size"
             android:textStyle="bold"
             android:textColor="@color/fontColor"
@@ -31,11 +31,11 @@
             android:id="@+id/imageView"
             android:layout_width="203dp"
             android:layout_height="205dp"
-            android:layout_marginTop="28dp"
-            android:src="@drawable/step3"
+            android:layout_marginTop="44dp"
+            android:src="@drawable/step4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView3"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:gravity="center"
-            android:text="スマホであなたの猫を\n撫でるように振ってあげましょう。\n猫は喜んであなたの作業を\n邪魔することはしばらく無いでしょう。\nしかし、また構わないでいたら\nちょっかいをかけてくるかもしれません。"
+            android:text="なでてあげた後は\nあなたの猫がキーボードに\n乗った時、どんな文字を打ったか\n見ることができます。"
             android:textStyle="bold"
             android:textColor="@color/fontColor"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -6,9 +6,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class WalkPagerAdapter(fm: FragmentActivity): FragmentStateAdapter(fm)  {
     private val res : List<Fragment> = listOf<Fragment>(
+        WalkFragment0(),
         WalkFragment1(),
         WalkFragment2(),
-        WalkFragment3()
+        WalkFragment3(),
+        WalkFragment4(),
+        WalkFragment5()
     )
 
     override fun createFragment(position: Int): Fragment {
