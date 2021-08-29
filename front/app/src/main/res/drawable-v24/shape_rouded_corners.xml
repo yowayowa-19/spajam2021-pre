@@ -9,7 +9,7 @@
                 android:topLeftRadius="10dp"
                 />
             <solid
-                android:color="#5F6368"
+                android:color="#FFF"
                 />
         </shape>
     </item>
@@ -22,7 +22,7 @@
                 android:topLeftRadius="10dp"
             />
             <solid
-                android:color="#B6B6B6"
+                android:color="#BF684A"
             />
         </shape>
     </item>

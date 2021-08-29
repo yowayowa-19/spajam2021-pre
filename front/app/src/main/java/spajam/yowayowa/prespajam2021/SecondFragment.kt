@@ -42,7 +42,6 @@ class SecondFragment : Fragment() {
             val intent = Intent(context, WalkThroughActivity::class.java)
             //帰ってこれなくする
             startActivity(intent)
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
 }

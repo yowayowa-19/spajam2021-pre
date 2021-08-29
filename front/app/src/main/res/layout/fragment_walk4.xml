@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment"
     android:background="@color/backgroundMain">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,42 +14,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.400">
-
-        <ImageView
-            android:id="@+id/imageView3"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/neko_b"
+            android:text="Step 4"
+            android:textSize="@dimen/h3_size"
+            android:textStyle="bold"
+            android:textColor="@color/fontColor"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textview_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="どうやら猫はなでてほしいようです"
-            android:textColor="@color/fontColor"
-            android:textSize="@dimen/h3_size"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="203dp"
+            android:layout_height="205dp"
+            android:layout_marginTop="44dp"
+            android:src="@drawable/step4"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <TextView
-            android:id="@+id/textview_second"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="撫でてあげましょう！"
-            android:textColor="@color/fontColor"
-            android:textSize="@dimen/h2_size"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="なでてあげた後は\nあなたの猫がキーボードに\n乗った時、どんな文字を打ったか\n見ることができます。"
             android:textStyle="bold"
+            android:textColor="@color/fontColor"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_first" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

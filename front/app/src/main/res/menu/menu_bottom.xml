@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/main"
+        android:icon="@drawable/favorite"
         android:orderInCategory="100"
-        android:title="main" />
+        android:title="猫の様子" />
     <item
         android:id="@+id/ranking"
+        android:icon="@drawable/crown"
         android:orderInCategory="200"
-        android:title="ranking"/>
+        android:title="ランキング"/>
 </menu>

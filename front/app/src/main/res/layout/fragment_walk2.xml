@@ -14,11 +14,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.400">
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Step 2"
+            android:textColor="@color/fontColor"
             android:textSize="@dimen/h3_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,27 +28,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="fugafugafuga"
-            android:textSize="@dimen/h2_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="203dp"
             android:layout_height="205dp"
-            android:layout_marginTop="48dp"
-            android:src="@drawable/awa"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/step2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView3"
@@ -54,8 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:gravity="center"
-            android:text="fugafugafuga\nfugafugafugafuga"
+            android:text="アプリで猫はあなたがかまってくれる\nのを待っています。\nすぐに起動してかまって\nあげましょう。"
             android:textStyle="bold"
+            android:textColor="@color/fontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
