@@ -108,9 +108,10 @@ class Users:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()[0]
+        is_sending: bool = x[0] if isinstance(
+            x := row.fetchone(), (tuple, list)) else x if x else False
         cur.close()
-        return is_sending if is_sending else False
+        return is_sending
 
     def set_phrase_and_score(self, mac_addr: str, phrase: str):
         print(mac_addr)
