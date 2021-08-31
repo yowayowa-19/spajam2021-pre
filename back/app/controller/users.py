@@ -1,13 +1,9 @@
 import sqlite3
 
-# from pathlib import Path
-
 try:
     from controller.libs import get_back_path
 except ModuleNotFoundError:
     from libs import get_back_path
-
-# from libs.get_path import get_back_path
 
 from libs.phrase import score
 
@@ -32,11 +28,11 @@ class Users:
             mac_addr text PRIMARY KEY,
             hard_mac_addr text,
             name text,
-            score integer,
+            score integer default 0,
             rank integer,
             hand text,
             phrase text,
-            is_sending integer
+            is_sending integer default 0
         )""")
         self.con.commit()
         cur.close()
@@ -51,7 +47,7 @@ class Users:
         count = len(row.fetchall())
         if count == 0:
             cur.execute(
-                """INSERT INTO users (mac_addr, name, score, is_sending) VALUES(?, ?, 0, false)""", (mac_addr, name))
+                """INSERT INTO users (mac_addr, name) VALUES(?, ?)""", (mac_addr, name))
             self.con.commit()
             cur.close()
             return True
@@ -59,10 +55,6 @@ class Users:
 
     def pairing(self, mac_addr: str, phrase: str) -> bool:
         cur = self.cursor()
-        # row = cur.execute(
-        #     "SELECT * FROM users WHERE mac_addr = ?", (mac_addr,))
-        # count = len(row.fetchall())
-        # if count == 0:
         row = cur.execute(
             "SELECT mac_addr FROM hard_devices WHERE phrase = ?", (phrase,))
         result = row.fetchall()
@@ -75,7 +67,6 @@ class Users:
             row = cur.execute(
                 "SELECT * FROM users WHERE hard_mac_addr = ?", (hard_mac_addr,))
             count = len(row.fetchall())
-            # print(count)
             if count == 1:
                 # ハードウェアMACアドレスが一致したらTrue
                 return True
@@ -87,41 +78,28 @@ class Users:
         cur.execute(
             "UPDATE users SET is_sending = 1 WHERE hard_mac_addr = ?", (mac_addr,))
         self.con.commit()
-        print(f'{mac_addr=}')
         row = cur.execute(
             "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (mac_addr,))
         is_sending: int = row.fetchone()
-        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
+        is_sending = is_sending[0] if isinstance(
+            is_sending, tuple) else is_sending
         self.con.commit()
-        # if is_sending is None:
-        #     is_sending = 1
-        print(f'l090: {is_sending=}')
         cur.close()
 
     def stop_phrase(self, mac_addr: str):
         cur = self.cursor()
-        row = cur.execute(
-            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()[0]
-        print(f'l102: {is_sending=}')
-        # if is_sending:
         cur.execute(
             "UPDATE users SET is_sending = 0 WHERE mac_addr = ?", (mac_addr,))
         self.con.commit()
-        row = cur.execute(
-            "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        is_sending: bool = row.fetchone()[0]
-        print(f'l112: {is_sending=}')
         cur.close()
 
     def is_sending(self, mac_addr: str) -> int:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE mac_addr = ?", (mac_addr,))
-        # is_sending: bool = x[0] if isinstance(
-        #     x := row.fetchone(), (tuple, list)) else x if x else False
         is_sending = row.fetchone()
-        is_sending = is_sending[0] if isinstance(is_sending, tuple) else is_sending
+        is_sending = is_sending[0] if isinstance(
+            is_sending, tuple) else is_sending
         cur.close()
         return is_sending if is_sending else 0
 
@@ -129,16 +107,12 @@ class Users:
         cur = self.cursor()
         row = cur.execute(
             "SELECT is_sending FROM users WHERE hard_mac_addr = ?", (hard_mac_addr,))
-        # is_sending: bool = x[0] if isinstance(
-        #     x := row.fetchone(), (tuple, list)) else x if x else False
         flag = row.fetchone()
         cur.close()
         return flag if flag else 0
 
     def set_phrase_and_score(self, mac_addr: str, phrase: str):
-        # print(mac_addr)
         _score, _hand = score(phrase)
-        # print(_score)
         cur = self.cursor()
         cur.execute("UPDATE users SET phrase = ?, score = ?, hand = ? WHERE hard_mac_addr = ?",
                     (phrase, _score, _hand, mac_addr,))
@@ -147,9 +121,15 @@ class Users:
 
     def get_ranking(self, mac_addr: str):
         cur = self.cursor()
-        row = cur.execute("""SELECT view 
-        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC) as rank_result FROM users) as view
-        WHERE rank_result <= 10""")
+        row = cur.execute("""
+        SELECT mac_addr, name, score, hand, 
+            (SELECT COUNT(*) + 1 
+            FROM users users2 
+            WHERE users2.score > users1.score) rnk
+        FROM users users1 
+        WHERE rnk <= 10 
+        ORDER BY score
+        """)
         result = [item + (mac_addr == item[0],) for item in row.fetchall()]
         print(result)
         cur.close()
@@ -157,10 +137,13 @@ class Users:
 
     def get_me(self, mac_addr: str):
         cur = self.cursor()
-        row = cur.execute("""SELECT view 
-        FROM (mac_addr, name, score, hand, RANK() OVER(ORDER BY score DESC ) as rank_result, true FROM users) as view
+        row = cur.execute("""
+        SELECT mac_addr, name, score, hand, 
+            (SELECT COUNT(*) + 1 
+            FROM users users2 
+            WHERE users2.score > users1.score) rnk
+        FROM users users1 
         WHERE mac_addr = ?""", (mac_addr,))
         result = row.fetchone()
         cur.close()
-        print(result)
         return result
